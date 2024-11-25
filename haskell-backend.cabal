@@ -59,14 +59,18 @@ executable haskell-backend
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules: API
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
 
     -- Other library packages from which modules are imported.
     build-depends:    base ^>=4.20.0.0,
-                      servant ^>=0.20.2
+                      servant ^>=0.20.2,
+                      servant-server ^>=0.20.2,
+                      text ^>=2.1.2,
+                      time ^>=1.12.2,
+                      warp ^>=3.4.6
 
     -- Directories containing source files.
     hs-source-dirs:   app
