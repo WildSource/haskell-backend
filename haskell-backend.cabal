@@ -59,7 +59,8 @@ executable haskell-backend
     main-is:          Main.hs
 
     -- Modules included in this executable, other than Main.
-    other-modules: API
+    other-modules: API,
+                   Entities.Comic
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -70,7 +71,8 @@ executable haskell-backend
                       servant-server ^>=0.20.2,
                       text ^>=2.1.2,
                       time ^>=1.12.2,
-                      warp ^>=3.4.6
+                      warp ^>=3.4.6,
+                      aeson ^>=2.2.3.0
 
     -- Directories containing source files.
     hs-source-dirs:   app
