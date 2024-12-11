@@ -72,7 +72,8 @@ executable haskell-backend
                       text ^>=2.1.2,
                       time ^>=1.12.2,
                       warp ^>=3.4.6,
-                      aeson ^>=2.2.3.0
+                      aeson ^>=2.2.3.0,
+                      mysql-simple ^>=0.4.9
 
     -- Directories containing source files.
     hs-source-dirs:   app
