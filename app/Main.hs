@@ -2,7 +2,6 @@ module Main where
 
 import API
 import Entities.Comic
-import Data.Data (Proxy(Proxy))
 import Network.Wai.Handler.Warp (run)
 import Servant.Server.StaticFiles (serveDirectoryWebApp)
 import Servant.API (
@@ -13,7 +12,8 @@ import Servant (
   Application, 
   Server, 
   serve, 
-  Handler
+  Handler,
+  Proxy
   ) 
 
 comicList :: [Comic]
@@ -35,21 +35,22 @@ server = comics
     comics = return comicList
 
     comic :: Integer -> Handler Comic
-    comic = undefined 
-  
+    comic comicId = return $ comicList !! (integerToInt comicId)
+
     createComic :: Comic -> Handler Comic
     createComic = return  
 
     modifyComic :: Integer -> Comic -> Handler Comic
-    modifyComic id comic = undefined
+    modifyComic cId _ = comic cId 
 
     deleteComic :: Integer -> Handler NoContent
     deleteComic _ = return NoContent
 
-    staticFiles = serveDirectoryWebApp "static-files"
+    staticFiles :: Server ImgAPI 
+    staticFiles = serveDirectoryWebApp "img"
     
 comicAPI :: Proxy ComicAPI
-comicAPI = Proxy
+comicAPI = undefined 
 
 app :: Application
 app = serve comicAPI server
