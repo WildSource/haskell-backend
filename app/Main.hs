@@ -4,7 +4,11 @@ import API
 import Entities.Comic
 import Data.Data (Proxy(Proxy))
 import Network.Wai.Handler.Warp (run)
-import Servant.API ((:<|>), NoContent (NoContent))
+import Servant.Server.StaticFiles (serveDirectoryWebApp)
+import Servant.API (
+  (:<|>) (..), 
+  NoContent (NoContent)
+  )
 import Servant (
   Application, 
   Server, 
@@ -42,7 +46,6 @@ server = comics
     deleteComic :: Integer -> Handler NoContent
     deleteComic _ = return NoContent
 
-    staticFiles ::    
     staticFiles = serveDirectoryWebApp "static-files"
     
 comicAPI :: Proxy ComicAPI
