@@ -1,8 +1,11 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Main where
 
 import API
 import Entities.Comic
 import Network.Wai.Handler.Warp (run)
+import Database.MySQL.Simple
 import Servant.Server.StaticFiles (serveDirectoryWebApp)
 import Servant.API (
   (:<|>) (..), 
@@ -55,7 +58,24 @@ comicAPI = undefined
 app :: Application
 app = serve comicAPI server
 
+connection :: ConnectInfo
+connection = 
+  defaultConnectInfo {
+    connectPort = 3306,
+    connectUser = "test",
+    connectPassword = "test",
+    connectDatabase = "test"
+  }
+
+hello :: IO Int
+hello = do
+  conn <- connect $ connection
+  [Only i] <- query_ conn "select 2 + 2"
+  return i
+
 main :: IO ()
 main = do
+  str <- hello
+  putStrLn $ show str
   run 8081 app
    
