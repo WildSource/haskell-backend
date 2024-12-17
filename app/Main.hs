@@ -7,7 +7,6 @@ import Entities.Comic
 import Network.Wai.Handler.Warp (run)
 import Servant.Server.StaticFiles (serveDirectoryWebApp)
 import Database.MySQL.Simple 
-import Database.MySQL.Simple.QueryResults
 import Servant (
   Application, 
   Server, 
