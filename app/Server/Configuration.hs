@@ -28,7 +28,9 @@ server = comics
   :<|> staticFiles
   where
     comics :: Handler [Comic] 
-    comics = pure $ getAllComics 
+    comics = do
+      comics' <- getAllComics 
+      pure (comics') 
 
     getComic :: Integer -> Handler Comic
     getComic comicId = undefined

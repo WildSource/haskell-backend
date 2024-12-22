@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Database.Repository where 
 
 import Database.MySQL.Simple (
@@ -6,9 +7,11 @@ import Database.MySQL.Simple (
   connectPort,
   connectUser,
   connectPassword,
-  connectDatabase
+  connectDatabase,
+  connect,
+  query_
   )
-import Entities.Comic (Comic)
+import Entities.Comic (Comic (..))
 
 connection :: ConnectInfo
 connection = 
@@ -23,6 +26,9 @@ getComicFromId :: Integer -> Comic
 getComicFromId = undefined
 
 -- TODO: implement this function and test it 
-getAllComics :: [Comic]
-getAllComics = undefined
+getAllComics :: IO [Comic]
+getAllComics = do
+  conn <- connect connection
+  comics <- query_ conn "select * from comic" 
+  pure comics 
 
