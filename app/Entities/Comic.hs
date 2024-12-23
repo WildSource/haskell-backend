@@ -5,13 +5,14 @@ module Entities.Comic where
 
 import Data.Aeson
 import GHC.Generics
-import Database.MySQL.Simple.Result (convert)
+import Database.MySQL.Simple.Result (convert, Result (..), FromField)
 import Database.MySQL.Simple.QueryResults (
   QueryResults, 
   convertError,
   convertResults
   )
 import Data.Time (UTCTime, Day)
+import Data.Data (Typeable)
 
 data Comic = Comic {
   c_id :: Integer,
@@ -20,7 +21,7 @@ data Comic = Comic {
   description :: String,
   creation_date :: Day,
   update_date :: UTCTime 
-} deriving (Show, Generic)
+} deriving (Show, Generic, Typeable)
 
 instance ToJSON Comic
 instance FromJSON Comic

@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Database.Repository where 
 
+import Entities.Comic (Comic (..))
 import Database.MySQL.Simple (
   ConnectInfo,
   defaultConnectInfo,
@@ -9,9 +10,11 @@ import Database.MySQL.Simple (
   connectPassword,
   connectDatabase,
   connect,
+  close,
+  Only (..),
+  query,
   query_
   )
-import Entities.Comic (Comic (..))
 
 connection :: ConnectInfo
 connection = 
@@ -22,12 +25,17 @@ connection =
     connectDatabase = "test"
   }
 
-getComicFromId :: Integer -> Comic
-getComicFromId = undefined
+getComicFromId :: Integer -> IO Comic
+getComicFromId id' = do
+  conn <- connect connection
+  [comic] <- query conn "select * from comic where comic_id = ?" (Only id')
+  close conn
+  pure comic
 
 getAllComics :: IO [Comic]
 getAllComics = do
   conn <- connect connection
   comics <- query_ conn "select * from comic" 
+  close conn
   pure comics 
 

@@ -18,7 +18,7 @@ import Servant.API (
   (:<|>) (..), 
   NoContent (NoContent)
   )
-import Database.Repository (getAllComics)
+import Database.Repository (getAllComics, getComicFromId)
 
 server :: Server ComicAPI 
 server = comics
@@ -32,7 +32,7 @@ server = comics
     comics = liftIO getAllComics 
 
     getComic :: Integer -> Handler Comic
-    getComic comicId = undefined
+    getComic = (liftIO . getComicFromId)
  
     postComic :: Comic -> Handler Comic
     postComic = undefined 
