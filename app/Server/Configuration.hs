@@ -5,6 +5,7 @@ module Server.Configuration (
 
 import API
 import Entities.Comic
+import Control.Monad.IO.Class
 import Servant.Server.StaticFiles (serveDirectoryWebApp)
 import Servant (
   Application,
@@ -28,9 +29,7 @@ server = comics
   :<|> staticFiles
   where
     comics :: Handler [Comic] 
-    comics = do
-      comics' <- getAllComics 
-      pure (comics') 
+    comics = liftIO getAllComics 
 
     getComic :: Integer -> Handler Comic
     getComic comicId = undefined

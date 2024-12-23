@@ -25,7 +25,6 @@ connection =
 getComicFromId :: Integer -> Comic
 getComicFromId = undefined
 
--- TODO: implement this function and test it 
 getAllComics :: IO [Comic]
 getAllComics = do
   conn <- connect connection
