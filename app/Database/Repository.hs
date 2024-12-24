@@ -60,3 +60,11 @@ deleteComicById deleteId = do
   nbrDeletedRow <- execute conn "DELETE FROM comic where comic_id = ?" (Only deleteId)
   close conn
   pure nbrDeletedRow
+
+-- PUT 
+replaceComicById :: Integer -> ComicData -> IO Int64 
+replaceComicById modifyId (ComicData t c d) = do
+  conn <- connect connection 
+  modifiedRow <- execute conn "UPDATE comic SET comic_title = ?, comic_cover = ?, comic_desc = ? where comic_id = ?" (t, c, d, modifyId)
+  close conn
+  pure modifiedRow
