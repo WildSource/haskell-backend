@@ -17,7 +17,6 @@ import Database.MySQL.Simple (
   query_,
   execute
   )
-import Servant (StdMethod(DELETE))
 
 -- TODO: support env variables
 connection :: ConnectInfo

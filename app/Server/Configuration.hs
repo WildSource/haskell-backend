@@ -5,8 +5,16 @@ module Server.Configuration (
 
 import API
 import Entities.Comic
+import Data.Int (Int64)
 import Control.Monad.IO.Class
+import Servant.API ((:<|>) (..))
 import Servant.Server.StaticFiles (serveDirectoryWebApp)
+import Database.Repository (
+  getAllComics,
+  getComicFromId,
+  createComic,
+  replaceComicById, deleteComicById
+  )
 import Servant (
   Application,
   Server,
@@ -14,11 +22,6 @@ import Servant (
   Handler,
   Proxy (Proxy)
   ) 
-import Servant.API (
-  (:<|>) (..), 
-  NoContent (NoContent)
-  )
-import Database.Repository (getAllComics, getComicFromId, createComic)
 
 server :: Server ComicAPI 
 server = comics
@@ -32,16 +35,16 @@ server = comics
     comics = liftIO getAllComics 
 
     getComic :: Integer -> Handler Comic
-    getComic = (liftIO . getComicFromId)
+    getComic = liftIO . getComicFromId
  
-    postComic :: ComicData -> Handler Comic 
-    postComic = (liftIO . createComic)
+    postComic :: ComicData -> Handler Int64 
+    postComic = liftIO . createComic
 
-    putComic :: Integer -> Comic -> Handler Comic
-    putComic cId _ = undefined 
+    putComic :: Integer -> ComicData -> Handler Int64 
+    putComic cId modifications = liftIO $ replaceComicById cId modifications
 
-    deleteComic :: Integer -> Handler NoContent
-    deleteComic _ = return NoContent
+    deleteComic :: Integer -> Handler Int64 
+    deleteComic = liftIO . deleteComicById  
 
     staticFiles :: Server ImgAPI 
     staticFiles = serveDirectoryWebApp "img"
