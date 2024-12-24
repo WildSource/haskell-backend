@@ -17,6 +17,7 @@ import Database.MySQL.Simple (
   query_,
   execute
   )
+import Servant (StdMethod(DELETE))
 
 -- TODO: support env variables
 connection :: ConnectInfo
@@ -51,3 +52,11 @@ createComic (ComicData { d_title = t, d_cover = c, d_description = d}) = do
   nbrRows <- execute conn "INSERT INTO comic (comic_title, comic_cover, comic_desc) VALUES (?, ?, ?)" (t, c, d)
   close conn
   pure nbrRows
+
+-- DELETE
+deleteComicById :: Integer -> IO Int64
+deleteComicById deleteId = do
+  conn <- connect connection
+  nbrDeletedRow <- execute conn "DELETE FROM comic where comic_id = ?" (Only deleteId)
+  close conn
+  pure nbrDeletedRow
