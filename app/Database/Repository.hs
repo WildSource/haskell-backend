@@ -1,6 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Database.Repository where 
 
+import Env
+import System.Environment
 import Data.Int (Int64)
 import Entities.Comic (Comic (..), ComicData (..))
 import Database.MySQL.Simple (

@@ -76,7 +76,8 @@ executable haskell-backend
                       warp ^>=3.4.6,
                       aeson ^>=2.2.3.0,
                       mysql-simple ^>=0.4.9,
-                      bytestring ^>=0.12.2.0
+                      bytestring ^>=0.12.2.0,
+                      env
 
     -- Directories containing source files.
     hs-source-dirs:   app
