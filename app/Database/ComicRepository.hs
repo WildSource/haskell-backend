@@ -1,21 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Database.ComicRepository where 
 
-import Text.Read
 import Data.Int (Int64)
-import Data.Word (Word16)
-import System.Environment
+import Database.Configuration
 import Entities.Comic (
   Comic (..), 
   ComicData (..)
   )
 import Database.MySQL.Simple (
-  ConnectInfo,
-  defaultConnectInfo,
-  connectPort,
-  connectUser,
-  connectPassword,
-  connectDatabase,
   connect,
   close,
   Only (..),
@@ -23,27 +15,6 @@ import Database.MySQL.Simple (
   query_,
   execute
   )
-
-connection :: IO ConnectInfo
-connection = do 
-  portStr <- getEnv "PORT"
-  port <- maybe (fail "Invalid PORT environment variable") pure (stringToInt portStr)
-  user <- getEnv "USER"
-  pass <- getEnv "PASS"
-  db <- getEnv "DB"
-
-  let conn = defaultConnectInfo {
-    connectPort = port,
-    connectUser = user,
-    connectPassword = pass,
-    connectDatabase = db
-  }
-  
-  pure conn
-  where
-    stringToInt :: String -> Maybe Word16
-    stringToInt = readMaybe
-  
 
 -- GET
 getComicFromId :: Integer -> IO Comic

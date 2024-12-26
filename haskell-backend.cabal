@@ -61,8 +61,12 @@ executable haskell-backend
     -- Modules included in this executable, other than Main.
     other-modules: API,
                    Entities.Comic,
+                   Entities.Page,
+                   Database.Configuration,
                    Database.ComicRepository,
+                   Database.PageRepository,
                    Server.ComicController
+                    
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
