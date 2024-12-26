@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Database.Repository where 
+module Database.ComicRepository where 
 
 import Text.Read
 import Data.Int (Int64)

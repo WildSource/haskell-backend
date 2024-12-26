@@ -1,4 +1,4 @@
-module Server.Configuration (
+module Server.ComicController (
   app
   )
  where
@@ -9,7 +9,7 @@ import Data.Int (Int64)
 import Control.Monad.IO.Class
 import Servant.API ((:<|>) (..))
 import Servant.Server.StaticFiles (serveDirectoryWebApp)
-import Database.Repository (
+import Database.ComicRepository (
   getAllComics,
   getComicFromId,
   createComic,
