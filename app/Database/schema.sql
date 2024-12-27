@@ -16,7 +16,6 @@ CREATE TABLE comic (
 DROP TABLE IF EXISTS page;
 CREATE TABLE page (
   page_id INT AUTO_INCREMENT PRIMARY KEY,
-  page_index INT,
   page_path TEXT,
   fk_comic_id INT,
   FOREIGN KEY (fk_comic_id) REFERENCES comic (comic_id)

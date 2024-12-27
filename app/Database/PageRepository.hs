@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Database.PageRepository where
 
 import Database.Configuration
-import Data.Int (Int64)
 import Entities.Page (Page, PagesData (PagesData, pages))
 import Database.MySQL.Simple (
   connect,
@@ -11,12 +11,12 @@ import Database.MySQL.Simple (
   Only (..),
   query,
   query_,
-  execute
+  execute, ConnectInfo (ConnectInfo)
   )
 
 -- GET
-getPageFromComicId :: Integer -> IO [Page]
-getPageFromComicId comicId = do
+getPage :: Integer -> IO [Page]
+getPage comicId = do
   connRecord <- connection
   conn <- connect connRecord
   comic <- query conn "select page_id as Identification, \n\
@@ -28,16 +28,20 @@ getPageFromComicId comicId = do
   close conn
   pure comic
 
-{-
+type ComicId = Integer
+
 -- POST 
-createComic :: PagesData -> IO Int64 
-createComic (PagesData { pages = p }) = do
+createPage :: ComicId -> PagesData -> IO () 
+createPage comic_id (PagesData { pages = p }) = do
   connRecord <- connection
   conn <- connect connRecord
-  nbrRows <- execute conn "INSERT INTO comic (comic_title, comic_cover, comic_desc) VALUES (?, ?, ?)" (Only p)
+  let query' = 
+    \(c_id :: Integer) (path :: String) 
+      -> execute conn "INSERT INTO page (page_path, fk_comic_id) VALUES (?, ?)" (path, c_id)
+  _ <- mapM (query' comic_id) p
   close conn
-  pure nbrRows
 
+{-
 -- DELETE
 deleteComicById :: Integer -> IO Int64
 deleteComicById deleteId = do
