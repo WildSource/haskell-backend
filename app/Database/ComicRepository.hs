@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
+
 module Database.ComicRepository where 
 
 import Data.Int (Int64)
