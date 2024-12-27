@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeOperators #-}
 
-module API where
+module API.Comic where
 
 import Servant
 import Entities.Comic

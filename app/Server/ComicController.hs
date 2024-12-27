@@ -3,7 +3,7 @@ module Server.ComicController (
   )
  where
 
-import API
+import API.Comic
 import Entities.Comic
 import Data.Int (Int64)
 import Control.Monad.IO.Class
