@@ -39,16 +39,15 @@ createPage comic_id (PagesData { pages = p }) = do
   _ <- mapM (query' comic_id) p
   close conn
 
-{-
 -- DELETE
-deleteComicById :: Integer -> IO Int64
-deleteComicById deleteId = do
+deletePageById :: Integer -> IO () 
+deletePageById deleteId = do
   connRecord <- connection
   conn <- connect connRecord
-  nbrDeletedRow <- execute conn "DELETE FROM comic where comic_id = ?" (Only deleteId)
+  _ <- execute conn "DELETE FROM page where fk_comic_id = ?" (Only deleteId)
   close conn
-  pure nbrDeletedRow
 
+{-
 -- PUT 
 replaceComicById :: Integer -> PagesData -> IO Int64 
 replaceComicById modifyId (PagesData p') = do
