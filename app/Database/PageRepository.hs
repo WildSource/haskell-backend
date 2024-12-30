@@ -4,7 +4,7 @@
 module Database.PageRepository where
 
 import Database.Configuration
-import Entities.Page (Page, PagesData (PagesData, pages))
+import Entities.Page (Page (fk_comic_id), PagesData (PagesData, pages))
 import Database.MySQL.Simple (
   connect,
   close,
@@ -47,13 +47,16 @@ deletePageById deleteId = do
   _ <- execute conn "DELETE FROM page where fk_comic_id = ?" (Only deleteId)
   close conn
 
-{-
 -- PUT 
-replaceComicById :: Integer -> PagesData -> IO Int64 
-replaceComicById modifyId (PagesData p') = do
+replacePageById :: Integer -> PagesData -> IO ()
+replacePageById modifyId (PagesData p') = do
   connRecord <- connection
   conn <- connect connRecord
-  modifiedRow <- execute conn "UPDATE comic SET comic_title = ?, comic_cover = ?, comic_desc = ? where comic_id = ?" (p', modifyId)
+  -- First get the page IDs for this comic in order
+  pageIds <- query conn "SELECT page_id FROM page WHERE fk_comic_id = ? ORDER BY page_id" [modifyId] :: IO [Only Integer]
+  -- Zip the page IDs with the new paths and update each one
+  let updates = zip (map fromOnly pageIds) p'
+  let update = \(pageId :: Integer, path :: String) -> 
+        execute conn "UPDATE page SET page_path = ? WHERE page_id = ?" (path, pageId)
+  _ <- mapM update updates
   close conn
-  pure modifiedRow
--}
