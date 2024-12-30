@@ -35,9 +35,7 @@ createPage :: ComicId -> PagesData -> IO ()
 createPage comic_id (PagesData { pages = p }) = do
   connRecord <- connection
   conn <- connect connRecord
-  let query' = 
-    \(c_id :: Integer) (path :: String) 
-      -> execute conn "INSERT INTO page (page_path, fk_comic_id) VALUES (?, ?)" (path, c_id)
+  let query' = \(c_id :: Integer) (path :: String) -> execute conn "INSERT INTO page (page_path, fk_comic_id) VALUES (?, ?)" (path, c_id)
   _ <- mapM (query' comic_id) p
   close conn
 
