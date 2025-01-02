@@ -4,14 +4,13 @@
 module Database.PageRepository where
 
 import Database.Configuration
-import Entities.Page (Page (fk_comic_id), PagesData (PagesData, pages))
+import Entities.Page (Page, PagesData (PagesData, pages))
 import Database.MySQL.Simple (
   connect,
   close,
   Only (..),
   query,
-  query_,
-  execute, ConnectInfo (ConnectInfo)
+  execute
   )
 
 -- GET
