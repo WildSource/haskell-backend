@@ -6,6 +6,7 @@ module API.Comic where
 import Servant
 import Entities.Comic
 import Data.Int (Int64)
+import API.Page (PageAPI)
 
 type ImgAPI = "imgs" :> Raw
 
@@ -15,3 +16,4 @@ type ComicAPI = "comics" :> Get '[JSON] [Comic]
   :<|> "comics" :> Capture "id" Integer :> ReqBody '[JSON] ComicData :> Put '[JSON] Int64 
   :<|> "comics" :> Capture "id" Integer :> Delete '[JSON] Int64 
   :<|> "comics" :> ImgAPI
+  :<|> PageAPI
