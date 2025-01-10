@@ -23,7 +23,12 @@ import Servant (
   Handler,
   Proxy (Proxy)
   ) 
-import Database.PageRepository (getPage, createPage, deletePageById, replacePageById)
+import Database.PageRepository (
+  getPage, 
+  createPage, 
+  deletePageById, 
+  replacePageById
+  )
 
 server :: Server ComicAPI 
 server = comics
