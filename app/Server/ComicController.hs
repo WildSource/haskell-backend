@@ -31,7 +31,7 @@ server = staticFiles :<|> comicsAPI
     staticFiles :: Server ImgAPI 
     staticFiles = serveDirectoryWebApp "img"
 
-    comicsAPI = comics :<|> (\comicData -> postComic comicData) :<|> comicOperations
+    comicsAPI = comics :<|> postComic :<|> comicOperations
 
     comics :: Handler [Comic]
     comics = liftIO getAllComics
