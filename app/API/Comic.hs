@@ -16,10 +16,12 @@ type ComicOperations =
   :<|> Delete '[JSON] Int64
   )
 
-type PageAPI = Get '[JSON] Page
-  :<|> ReqBody '[JSON] PagesData :> Post '[JSON] Int64 
-  :<|> ReqBody '[JSON] PagesData :> Put '[JSON] Int64 
-  :<|> Delete '[JSON] Int64
+type PageAPI = "pages" :> 
+  (    Get '[JSON] [Page]
+  :<|> ReqBody '[JSON] PagesData :> Post '[JSON] NoContent
+  :<|> ReqBody '[JSON] PagesData :> Put '[JSON] NoContent 
+  :<|> Delete '[JSON] NoContent 
+  )
 
 type ComicID = Capture "id" Integer :> (ComicOperations :<|> PageAPI)
 
