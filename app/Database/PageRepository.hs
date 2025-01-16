@@ -18,10 +18,9 @@ getPage :: Integer -> IO [Page]
 getPage comicId = do
   connRecord <- connection
   conn <- connect connRecord
-  comic <- query conn "select page_id as Identification, \n\
-                              \page_index as PageNumber, \n\
-                              \page_path as FilePath, \n\
-                              \fk_comic_id as ForeignKey \n\
+  comic <- query conn "select page_id,\n\
+                              \page_path,\n\
+                              \fk_comic_id\n\
                        \from page \n\
                        \where page.fk_comic_id = ?" (Only comicId)
   close conn
