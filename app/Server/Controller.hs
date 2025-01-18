@@ -1,13 +1,15 @@
 {-# LANGUAGE TypeOperators #-}
 
-module Server.ComicController (
+module Server.Controller (
   app
   )
  where
 
-import API.Comic
+import API.Server
 import Entities.Comic
+import Entities.DTR.ComicDTR
 import Entities.Page
+import Entities.DTR.PageDTR
 import Data.Int (Int64)
 import Control.Monad.IO.Class
 import Servant.API ((:<|>) (..), NoContent (NoContent))
@@ -47,10 +49,10 @@ server = staticFiles :<|> comicsAPI
     getComic :: Integer -> Handler Comic
     getComic = liftIO . getComicFromId
 
-    postComic :: ComicData -> Handler Int64 
+    postComic :: ComicDTR -> Handler Int64 
     postComic = liftIO . createComic
 
-    putComic :: Integer -> ComicData -> Handler Int64 
+    putComic :: Integer -> ComicDTR -> Handler Int64 
     putComic cId modifications = liftIO $ replaceComicById cId modifications
 
     deleteComic :: Integer -> Handler Int64 
@@ -62,10 +64,10 @@ server = staticFiles :<|> comicsAPI
     getPages :: Integer -> Handler [Page] 
     getPages = liftIO . getPage  
 
-    postPage :: Integer -> PagesData -> Handler NoContent  
+    postPage :: Integer -> PageDTR -> Handler NoContent  
     postPage cId pData= liftIO $ createPage cId pData >> pure NoContent
 
-    putPage :: Integer -> PagesData -> Handler NoContent
+    putPage :: Integer -> PageDTR -> Handler NoContent
     putPage cId pData = liftIO $ replacePageById cId pData >> pure NoContent 
 
     deletePage :: Integer -> Handler NoContent

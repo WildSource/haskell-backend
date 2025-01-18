@@ -4,10 +4,8 @@ module Database.ComicRepository where
 
 import Data.Int (Int64)
 import Database.Configuration
-import Entities.Comic (
-  Comic (..), 
-  ComicData (..)
-  )
+import Entities.Comic 
+import Entities.DTR.ComicDTR
 import Database.MySQL.Simple (
   connect,
   close,
@@ -36,8 +34,8 @@ getAllComics = do
   pure comics 
 
 -- POST 
-createComic :: ComicData -> IO Int64 
-createComic (ComicData { d_title = t, d_cover = c, d_description = d}) = do
+createComic :: ComicDTR -> IO Int64 
+createComic (ComicDTR { d_title = t, d_cover = c, d_description = d}) = do
   connRecord <- connection
   conn <- connect connRecord
   nbrRows <- execute conn "INSERT INTO comic (comic_title, comic_cover, comic_desc) VALUES (?, ?, ?)" (t, c, d)
@@ -54,8 +52,8 @@ deleteComicById deleteId = do
   pure nbrDeletedRow
 
 -- PUT 
-replaceComicById :: Integer -> ComicData -> IO Int64 
-replaceComicById modifyId (ComicData t c d) = do
+replaceComicById :: Integer -> ComicDTR -> IO Int64 
+replaceComicById modifyId (ComicDTR t c d) = do
   connRecord <- connection
   conn <- connect connRecord
   modifiedRow <- execute conn "UPDATE comic SET comic_title = ?, comic_cover = ?, comic_desc = ? where comic_id = ?" (t, c, d, modifyId)

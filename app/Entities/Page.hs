@@ -1,4 +1,3 @@
-
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE BangPatterns #-}
 
@@ -16,13 +15,6 @@ import Database.MySQL.Simple.QueryResults (
   convertError,
   convertResults
   )
-
-data PagesData = PagesData {
-  pages :: [String]
-} deriving (Show, Generic, Typeable)
-
-instance ToJSON PagesData
-instance FromJSON PagesData
 
 data Page = Page {
   page_id :: Integer,

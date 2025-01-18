@@ -2,7 +2,7 @@
 module Main where
 
 import Env
-import Server.ComicController (app)
+import Server.Controller (app)
 import Network.Wai.Handler.Warp (run)
 
 main :: IO ()

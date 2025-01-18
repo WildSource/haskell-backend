@@ -14,15 +14,6 @@ import Database.MySQL.Simple.QueryResults (
 import Data.Time (UTCTime, Day)
 import Data.Data (Typeable)
 
-data ComicData = ComicData {
-  d_title :: String,
-  d_cover :: String,
-  d_description :: String
-} deriving (Show, Generic, Typeable) 
-
-instance ToJSON ComicData
-instance FromJSON ComicData
-
 data Comic = Comic {
   c_id :: Integer,
   title :: String,
@@ -54,4 +45,3 @@ instance QueryResults Comic where
             !e = convert fe ve
             !f = convert ff vf
     convertResults fs vs = convertError fs vs 6 
-

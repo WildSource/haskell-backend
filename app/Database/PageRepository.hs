@@ -4,7 +4,9 @@
 module Database.PageRepository where
 
 import Database.Configuration
-import Entities.Page (Page, PagesData (PagesData, pages))
+import Entities.Page 
+import Entities.DTR.PageDTR 
+import Entities.DTR.ComicDTR
 import Database.MySQL.Simple (
   connect,
   close,
@@ -29,8 +31,8 @@ getPage comicId = do
 type ComicId = Integer
 
 -- POST 
-createPage :: ComicId -> PagesData -> IO () 
-createPage comic_id (PagesData { pages = p }) = do
+createPage :: ComicId -> PageDTR -> IO () 
+createPage comic_id (PageDTR { pages = p }) = do
   connRecord <- connection
   conn <- connect connRecord
   let query' = \(c_id :: Integer) (path :: String) -> execute conn "INSERT INTO page (page_path, fk_comic_id) VALUES (?, ?)" (path, c_id)
@@ -46,8 +48,8 @@ deletePageById deleteId = do
   close conn
 
 -- PUT 
-replacePageById :: Integer -> PagesData -> IO ()
-replacePageById modifyId (PagesData p') = do
+replacePageById :: Integer -> PageDTR -> IO ()
+replacePageById modifyId (PageDTR p') = do
   connRecord <- connection
   conn <- connect connRecord
   -- First get the page IDs for this comic in order
