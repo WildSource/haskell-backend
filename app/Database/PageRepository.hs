@@ -6,7 +6,6 @@ module Database.PageRepository where
 import Database.Configuration
 import Entities.Page 
 import Entities.DTR.PageDTR 
-import Entities.DTR.ComicDTR
 import Database.MySQL.Simple (
   connect,
   close,

@@ -77,6 +77,7 @@ executable haskell-backend
     build-depends:    base ^>=4.20.0.0,
                       servant ^>=0.20.2,
                       servant-server ^>=0.20.2,
+                      servant-multipart ^>=0.12.1,
                       text ^>=2.1.2,
                       time ^>=1.12.2,
                       warp ^>=3.4.6,
